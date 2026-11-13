@@ -1,0 +1,44 @@
+============================================================
+SANEAMIENTO DEL DATASET  2015-01 a 2025-12
+============================================================
+Archivos: huanuco_mensual_2015_2029.csv, huanuco_mensual_2020_2024.csv, huanuco_mensual_2025_2025.csv
+
+1) Filas leídas: 95,256 | duplicados eliminados: 27,216
+   Filas dentro del periodo: 49,896
+
+2) Tabla completa: 378 celdas x 132 meses = 49,896 filas
+   OK: ningún mes ni celda falta por completo
+
+3) Valores fuera de rango físico (pasan a NaN)
+   t2m            0
+   tmin           0
+   tmax           0
+   hr             0
+   pp_era5        0
+   pp_chirps      0
+   rad            0
+   hum_suelo      0
+   ndvi           0
+   lst            0
+
+4) Huecos sueltos rellenados (interpolación | climatología | siguen vacíos)
+   pp_chirps  objetivo: no se rellena (0 vacíos se excluyen al modelar)
+   lst          234 |    37 |     0
+
+5) Razón ERA5/CHIRPS por celda: mediana 1.68, rango 0.60 a 9.35
+   Celdas marcadas como lluvia inconsistente (> 3x): 14
+     -75.75_-9.85  ERA5 = 9.3 x CHIRPS
+     -75.75_-9.95  ERA5 = 7.3 x CHIRPS
+     -75.85_-9.85  ERA5 = 6.2 x CHIRPS
+     -75.85_-9.95  ERA5 = 6.1 x CHIRPS
+     -75.65_-9.85  ERA5 = 4.5 x CHIRPS
+     -75.75_-9.75  ERA5 = 4.2 x CHIRPS
+     -75.95_-9.95  ERA5 = 4.1 x CHIRPS
+     -75.95_-9.85  ERA5 = 3.8 x CHIRPS
+     -75.85_-10.05  ERA5 = 3.8 x CHIRPS
+     -75.65_-9.95  ERA5 = 3.7 x CHIRPS
+   pp_era5 queda solo como predictor; el objetivo provisional es pp_chirps (luego PISCO)
+
+6) DATASET FINAL: dataset_huanuco_2015_2025.csv
+   49,896 filas | 378 celdas | 132 meses (2015-01 a 2025-12) | 8.4 MB
+   Vacíos restantes en predictores: 0

@@ -1,0 +1,6 @@
+variante,n_predictores,RMSE,MAE,R2,KGE,SS_clim
+completo,37,71.5549,46.1172,0.7559,0.8412,-0.1154
+sin_geoespaciales,31,69.9196,44.7217,0.7670,0.8433,-0.0650
+sin_enso,35,67.3097,42.7903,0.7840,0.8520,0.0130
+sin_satelitales,17,72.6017,48.2870,0.7488,0.8331,-0.1483
+solo_rezagos_y_estacion,9,67.4200,42.6310,0.7833,0.8560,0.0098
