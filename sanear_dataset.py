@@ -149,5 +149,5 @@ if __name__ == "__main__":
     ap.add_argument("--carpeta", default=".")
     ap.add_argument("--ini", default="2015-01")
     ap.add_argument("--fin", default="2025-12")
-    a = ap.parse_args()
+    a = ap.parse_known_args()[0]               # ignora el "-f kernel.json" de Colab/Jupyter
     main(a.carpeta, a.ini, a.fin)

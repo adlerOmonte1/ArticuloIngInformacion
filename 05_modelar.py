@@ -271,4 +271,4 @@ if __name__ == "__main__":
     ap.add_argument("--val", default="2022-01", help="inicio de validación (YYYY-MM)")
     ap.add_argument("--test", default="2023-01", help="inicio de prueba (YYYY-MM)")
     ap.add_argument("--fin", default=None, help="último mes a usar (opcional)")
-    main(ap.parse_args())
+    main(ap.parse_known_args()[0])             # parse_known_args: ignora el "-f kernel.json" de Colab/Jupyter

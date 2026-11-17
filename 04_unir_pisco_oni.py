@@ -96,4 +96,4 @@ def main(datos):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--datos", default="dataset_huanuco_2015_2025.csv")
-    main(ap.parse_args().datos)
+    main(ap.parse_known_args()[0].datos)       # parse_known_args: ignora el "-f kernel.json" de Colab/Jupyter

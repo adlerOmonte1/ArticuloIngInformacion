@@ -1,0 +1,97 @@
+{
+  "objetivo": "pp_pisco",
+  "fuente": "pisco_prec.nc",
+  "periodo": [
+    "1981-01",
+    "2026-10"
+  ],
+  "ultimo_mes_observado": "2026-10",
+  "anios_prueba": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "modelo_por_horizonte": {
+    "1": "Ridge_rezagos",
+    "2": "Ridge_rezagos",
+    "3": "Ridge_rezagos"
+  },
+  "variantes": {
+    "Ridge_rezagos": [
+      "z_l0",
+      "z_l1",
+      "z_l2",
+      "z_l3",
+      "z_l11",
+      "z_m3",
+      "z_m6",
+      "mes_sin",
+      "mes_cos"
+    ],
+    "Ridge_rezagos_oni": [
+      "z_l0",
+      "z_l1",
+      "z_l2",
+      "z_l3",
+      "z_l11",
+      "z_m3",
+      "z_m6",
+      "mes_sin",
+      "mes_cos",
+      "oni_l2",
+      "oni_l3"
+    ],
+    "XGB_rezagos": [
+      "z_l0",
+      "z_l1",
+      "z_l2",
+      "z_l3",
+      "z_l11",
+      "z_m3",
+      "z_m6",
+      "mes_sin",
+      "mes_cos"
+    ],
+    "XGB_rezagos_oni": [
+      "z_l0",
+      "z_l1",
+      "z_l2",
+      "z_l3",
+      "z_l11",
+      "z_m3",
+      "z_m6",
+      "mes_sin",
+      "mes_cos",
+      "oni_l2",
+      "oni_l3"
+    ],
+    "XGB_completo": [
+      "z_l0",
+      "z_l1",
+      "z_l2",
+      "z_l3",
+      "z_l11",
+      "z_m3",
+      "z_m6",
+      "mes_sin",
+      "mes_cos",
+      "oni_l2",
+      "oni_l3",
+      "lon",
+      "lat",
+      "elev"
+    ]
+  },
+  "oni_ultimo": {
+    "fecha": "2026-09",
+    "valor": 2.46
+  },
+  "generado": "2026-11-17 09:42"
+}
