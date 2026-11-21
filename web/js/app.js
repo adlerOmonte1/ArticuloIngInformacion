@@ -421,7 +421,7 @@ function construirMapa() {
     esri("Reference/World_Boundaries_and_Places", { pane: "etiquetas" }),
   ]);
   S.base.relieve.addTo(S.map);
-  L.control.layers({ "Relieve": S.base.relieve, "Calles": S.base.calles, "Satélite": S.base.satelite }, null, { position: "topright", collapsed: innerWidth < 640 }).addTo(S.map);
+  L.control.layers({ "Relieve": S.base.relieve, "Calles": S.base.calles, "Satélite": S.base.satelite }, null, { position: "topright", collapsed: $("#mapa").clientWidth < 700 }).addTo(S.map);
   S.map.on("baselayerchange", () => {
     const sat = S.map.hasLayer(S.base.satelite), calles = S.map.hasLayer(S.base.calles);
     ras.classList.toggle("blend", !sat);
@@ -509,7 +509,16 @@ function elegirPunto(lat, lon, centrar, id = null) {
   if (centrar) S.map.setView([lat, lon], Math.max(S.map.getZoom(), 10));
   renderPanel();
   cargarHistorico().then(() => renderPanel());
-  if (innerWidth < 960) $("#panel").scrollIntoView({ behavior: "smooth", block: "start" });
+  if (innerWidth < 960) irAlResultado();
+}
+/* En celular el panel queda debajo del mapa: se baja hasta el resultado.
+   Se espera a que Leaflet termine de enfocar y mover el mapa, porque eso cancela un desplazamiento inmediato. */
+function irAlResultado() {
+  clearTimeout(irAlResultado.t);
+  irAlResultado.t = setTimeout(() => {
+    const top = $("#detalle").getBoundingClientRect().top + scrollY - 76;
+    scrollTo({ top, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }, 400);
 }
 function usarUbicacion() {
   if (!navigator.geolocation) { $("#form-msg").textContent = "Su celular o navegador no permite obtener la ubicación."; return; }

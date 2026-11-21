@@ -535,6 +535,11 @@ strong, b { font-weight: 700; }
   .summary { margin: -64px 16px 0; }
   .grid-main { grid-template-columns: 1fr; }
   .map-card { position: relative; top: 0; }
+  /* la leyenda pasa debajo del mapa para no tapar la región */
+  .legend { position: static; max-width: none; border-radius: 0; box-shadow: none; background: var(--surface); color: var(--ink);
+    border-top: 1px solid var(--line); padding: 12px 14px; }
+  .legend .lg-pair .h, .legend .lg-sub { color: var(--muted); }
+  .legend .lg-ticks { color: var(--ink-2); }
   #mapa { height: 62vh; min-height: 380px; }
   .zone-grid { grid-template-columns: 1fr; }
   .tech-in { grid-template-columns: 1fr; }
@@ -563,7 +568,6 @@ strong, b { font-weight: 700; }
   .layers svg { width: 16px; height: 16px; }
   .month-pick { width: 100%; }
   .month-pick input { min-height: 46px; }
-  .legend { left: 8px; bottom: 22px; font-size: .78rem; padding: 8px 10px; }
   .map-top { flex-wrap: wrap; }
   .pipeline { grid-template-columns: 1fr; }
   .pipeline li { display: grid; grid-template-columns: 48px 1fr; column-gap: 14px; padding: 0; }
