@@ -2,17 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clima Huánuco · Pronóstico de lluvias para el agricultor</title>
-  <meta name="description" content="Pronóstico de lluvias para los próximos 3 meses en la región Huánuco, con avisos de sequía, lluvias fuertes y heladas para los agricultores.">
-  <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0f1412" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="Clima Huánuco · ¿Cómo vendrán las lluvias en tu chacra?">
-  <meta property="og:description" content="Pronóstico de lluvias a 3 meses para la región Huánuco, con avisos para el agro.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231f5c45'/><path d='M16 6c4 5.5 7 9 7 12.5a7 7 0 0 1-14 0C9 15 12 11.5 16 6z' fill='%23f3f1ec'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tamya · Pronóstico de lluvias para el agro de Huánuco</title>
+  <meta name="description" content="Tamya pronostica la lluvia de los próximos tres meses en cada lugar de la región Huánuco y avisa a tiempo de sequías, lluvias fuertes y heladas.">
+  <meta name="theme-color" content="#f5efe3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111612" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Tamya · ¿Cómo vendrán las lluvias en tu chacra?">
+  <meta property="og:description" content="Pronóstico de lluvias a tres meses para la región Huánuco, con avisos para el agro.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231f5a3d'/><path d='M4 24l8-10 5 6 3-3 8 7z' fill='%23e9c46a'/><path d='M20 5c2.6 3.4 4.4 5.6 4.4 7.8a4.4 4.4 0 0 1-8.8 0C15.6 10.6 17.4 8.4 20 5z' fill='%23f5efe3'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -21,93 +21,138 @@
 
   <header class="topbar">
     <div class="wrap topbar-in">
-      <a class="brand" href="#inicio" aria-label="Clima Huánuco, inicio">
-        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6"/><path d="M16 6c4 5.5 7 9 7 12.5a7 7 0 0 1-14 0C9 15 12 11.5 16 6z"/></svg>
-        <span class="brand-name">Clima Huánuco</span>
-        <span class="brand-sep" aria-hidden="true"></span>
-        <span class="brand-sub">Pronóstico agroclimático</span>
+      <a class="brand" href="#inicio" aria-label="Tamya, inicio">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="bm-bg"/><path d="M4 24l8-10 5 6 3-3 8 7z" class="bm-mt"/><path d="M20 5c2.6 3.4 4.4 5.6 4.4 7.8a4.4 4.4 0 0 1-8.8 0C15.6 10.6 17.4 8.4 20 5z" class="bm-drop"/></svg>
+        <span class="brand-txt"><span class="brand-name">Tamya</span><span class="brand-sub">Clima Huánuco</span></span>
       </a>
       <nav class="nav" aria-label="Secciones">
         <a href="#pronostico">Pronóstico</a>
+        <a href="#panorama">Panorama</a>
         <a href="#zonas">Zonas</a>
         <a href="#como">Cómo funciona</a>
+        <a href="#proyecto">Proyecto</a>
       </nav>
+      <button class="text-btn" id="btn-texto" type="button" aria-pressed="false" title="Agrandar o achicar la letra">
+        <span aria-hidden="true">A<sup>+</sup></span><span class="sr-only">Letra grande</span>
+      </button>
     </div>
+    <div class="awayu" aria-hidden="true"></div>
   </header>
 
   <main id="inicio">
+    <!-- ============================================================ PORTADA -->
     <section class="hero">
       <div class="wrap hero-in">
         <div class="hero-text">
-          <p class="kicker" id="emision">Cargando…</p>
-          <h1>¿Cómo vendrán las <em>lluvias</em> en tu chacra?</h1>
-          <p class="lead">Te decimos si en los próximos tres meses lloverá <strong>menos, igual o más</strong> de lo que suele llover en tu zona,
-            y te avisamos si hay peligro de sequía, lluvias fuertes o heladas.</p>
-          <a class="btn btn-primary btn-lg" href="#pronostico">Ver el pronóstico de mi chacra
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <p class="kicker"><span class="dot"></span><span id="emision">Cargando…</span></p>
+          <h1>Sepa cómo vendrán las lluvias <em>antes de sembrar</em>.</h1>
+          <p class="lead">Tamya pronostica la lluvia de los próximos tres meses para cada lugar de Huánuco, de la puna a la selva,
+            y le avisa a tiempo si viene una temporada seca, lluvias fuertes o heladas.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#pronostico">Ver el pronóstico de mi chacra
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-ghost btn-lg" href="#como">Cómo funciona</a>
+          </div>
+          <ul class="facts">
+            <li><b data-meta="anios">45</b><span>años de registros de lluvia</span></li>
+            <li><b data-meta="celdas">378</b><span>puntos vigilados en la región</span></li>
+            <li><b>3</b><span>meses de anticipación</span></li>
+            <li><b>Gratis</b><span>sin registro ni descargas</span></li>
+          </ul>
         </div>
-        <aside class="summary" id="resumen" aria-label="Resumen de la región"></aside>
+
+        <div class="hero-art">
+          <svg class="landscape" viewBox="0 0 560 420" role="img" aria-label="Paisaje de Huánuco: cordillera nevada, sierra con andenes y selva">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sky-a"/><stop offset="1" class="sky-b"/></linearGradient>
+              <clipPath id="frame"><rect width="560" height="420" rx="28"/></clipPath>
+            </defs>
+            <g clip-path="url(#frame)">
+              <rect width="560" height="420" fill="url(#sky)"/>
+              <circle cx="420" cy="92" r="34" class="sun"/>
+              <g class="cloud"><path d="M118 104a26 26 0 0 1 50-9 20 20 0 0 1 34 14h-84z"/>
+                <g class="rain"><path d="M136 120l-6 14M154 120l-6 14M172 120l-6 14M190 120l-6 14"/></g></g>
+              <path class="ridge-1" d="M0 250 70 170l40 34 60-92 52 70 38-36 70 84 54-60 72 66 40-30 64 54v160H0z"/>
+              <path class="snow" d="M170 112l-22 34 14-6 10 12 10-16 18 6zM260 146l-12 16 9-3 5 6 6-9 10 3zM384 170l-14 18 10-3 6 7 7-10 12 3z"/>
+              <path class="ridge-2" d="M0 286c40-26 80-46 130-40s80 28 130 20 90-46 150-44 110 30 150 52v146H0z"/>
+              <g class="terraces"><path d="M60 290c30-8 60-10 92-4M48 304c36-8 72-10 110-4M40 318c40-8 80-10 124-4M210 288c30-6 62-6 96 0M200 302c36-6 72-6 112 0"/></g>
+              <path class="ridge-3" d="M0 336c50-20 90-24 140-14s96 24 150 14 100-30 150-28 90 18 120 30v82H0z"/>
+              <g class="trees">
+                <circle cx="330" cy="336" r="13"/><circle cx="352" cy="330" r="16"/><circle cx="376" cy="338" r="12"/><circle cx="420" cy="326" r="17"/>
+                <circle cx="446" cy="334" r="13"/><circle cx="476" cy="324" r="16"/><circle cx="506" cy="332" r="14"/><circle cx="534" cy="324" r="18"/>
+              </g>
+              <path class="river" d="M214 420c10-30 40-40 30-60s-40-22-20-44 70-14 90-34"/>
+              <g class="chacra"><path d="M90 380h70l10-24H100z"/><path d="M108 376l6-14M124 376l6-14M140 376l6-14" class="rows"/></g>
+            </g>
+          </svg>
+          <aside class="summary" id="resumen" aria-label="Resumen de la región"></aside>
+        </div>
       </div>
     </section>
 
-    <section id="pronostico" class="section">
+    <!-- ============================================================ PRONÓSTICO -->
+    <section id="pronostico" class="section section-tool">
       <div class="wrap">
         <header class="sec-head">
-          <span class="sec-num">01</span>
-          <div>
-            <h2>Pronóstico de lluvias</h2>
-            <ol class="howto" aria-label="Cómo usar">
-              <li><b>1</b>Elige el mes</li>
-              <li><b>2</b>Busca tu pueblo o toca tu chacra en el mapa</li>
-              <li><b>3</b>Revisa el pronóstico, los avisos y los consejos</li>
-            </ol>
-          </div>
+          <p class="eyebrow">01 · Su chacra</p>
+          <h2>El pronóstico de su lugar</h2>
+          <ol class="howto" aria-label="Cómo usar">
+            <li><b>1</b>Elija el mes</li>
+            <li><b>2</b>Busque su pueblo o toque el mapa</li>
+            <li><b>3</b>Lea el pronóstico, los avisos y los consejos</li>
+          </ol>
         </header>
 
         <div class="toolbar" role="group" aria-label="Opciones del mapa">
           <div class="tb-group">
             <span class="tb-label" id="lbl-mes">Mes</span>
-            <div class="seg" id="seg-meses" role="radiogroup" aria-labelledby="lbl-mes"></div>
+            <div class="months" id="seg-meses" role="radiogroup" aria-labelledby="lbl-mes"></div>
             <label class="month-pick"><span>Otro mes</span><input type="month" id="mes-input" min="1981-01" max="2035-12"></label>
           </div>
           <div class="tb-group">
-            <label class="tb-label" for="capa">Ver en el mapa</label>
-            <select id="capa"></select>
+            <span class="tb-label" id="lbl-capa">Ver en el mapa</span>
+            <div class="layers" id="capas" role="radiogroup" aria-labelledby="lbl-capa"></div>
           </div>
-          <span class="mode-badge" id="modo" aria-live="polite"></span>
         </div>
 
         <div class="grid-main">
           <div class="map-card">
-            <div id="mapa" role="application" aria-label="Mapa de la región Huánuco. Toque un cuadro para ver su pronóstico."></div>
-            <div class="legend" id="leyenda" aria-label="Qué significan los colores"></div>
+            <div class="map-top">
+              <span class="mode-badge" id="modo" aria-live="polite"></span>
+              <label class="switch"><input type="checkbox" id="ver-grilla"><span class="sw-track" aria-hidden="true"></span>Ver cuadrícula</label>
+            </div>
+            <div class="map-wrap">
+              <div id="mapa" role="application" aria-label="Mapa de la región Huánuco. Toque un lugar para ver su pronóstico."></div>
+              <div class="legend" id="leyenda" aria-label="Qué significan los colores"></div>
+            </div>
             <div class="map-foot">
               <span id="map-note"></span>
-              <button class="link-btn" id="descargar" type="button">Descargar datos del mes (CSV)</button>
+              <button class="link-btn" id="descargar" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Descargar datos del mes</button>
             </div>
           </div>
 
           <aside class="panel" id="panel" aria-labelledby="panel-titulo">
             <div class="panel-head">
               <h2 id="panel-titulo">Mi chacra</h2>
-              <p>Busca tu pueblo, usa tu ubicación o toca el mapa.</p>
+              <p>Busque su pueblo, use su ubicación o toque el mapa.</p>
             </div>
             <div class="loc-form">
               <form id="form-buscar" class="search-row" role="search">
-                <label for="in-lugar" class="sr-only">Nombre de tu pueblo o distrito</label>
+                <label for="in-lugar" class="sr-only">Nombre de su pueblo o distrito</label>
                 <svg class="search-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-                <input id="in-lugar" type="search" placeholder="Pueblo o distrito, ej. Tomayquichua" autocomplete="off">
+                <input id="in-lugar" type="search" placeholder="Pueblo o distrito, ej. Tomayquichua" autocomplete="off" enterkeyhint="search">
                 <button class="btn btn-primary" type="submit">Buscar</button>
               </form>
               <ul class="results" id="resultados" hidden></ul>
               <div class="loc-row">
-                <button class="btn" id="btn-geo" type="button">
+                <button class="btn btn-soft" id="btn-geo" type="button">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg>
                   Usar mi ubicación
                 </button>
                 <label class="alt-row">
-                  <span>Altura de tu chacra (m)</span>
-                  <input id="in-alt" inputmode="numeric" placeholder="opcional" autocomplete="off">
+                  <span>Altura de su chacra</span>
+                  <span class="alt-in"><input id="in-alt" inputmode="numeric" placeholder="opcional" autocomplete="off"><i>m</i></span>
                 </label>
               </div>
               <details class="coords">
@@ -115,7 +160,7 @@
                 <form id="form-coord" class="coord-row">
                   <label><span>Latitud</span><input id="in-lat" inputmode="decimal" placeholder="-9.93" autocomplete="off"></label>
                   <label><span>Longitud</span><input id="in-lon" inputmode="decimal" placeholder="-76.24" autocomplete="off"></label>
-                  <button class="btn" type="submit">Ir</button>
+                  <button class="btn btn-soft" type="submit">Ir</button>
                 </form>
               </details>
               <p class="form-msg" id="form-msg" role="status"></p>
@@ -126,62 +171,129 @@
       </div>
     </section>
 
-    <section id="zonas" class="section">
+    <!-- ============================================================ PANORAMA -->
+    <section id="panorama" class="section">
       <div class="wrap">
         <header class="sec-head">
-          <span class="sec-num">02</span>
-          <div>
-            <h2>Las zonas del clima</h2>
-            <p class="sec-lead">La región se divide en tres zonas donde la lluvia se comporta de forma parecida a lo largo del año.</p>
-          </div>
+          <p class="eyebrow">02 · Panorama</p>
+          <h2>Cómo viene la temporada en cada zona</h2>
+          <p class="sec-lead">Lo que se espera en la mayor parte de cada zona durante los próximos tres meses.</p>
+        </header>
+        <div class="table-scroll"><div class="pano" id="pano"></div></div>
+        <p class="note" id="pano-nota"></p>
+      </div>
+    </section>
+
+    <!-- ============================================================ ZONAS -->
+    <section id="zonas" class="section section-alt">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow">03 · Territorio</p>
+          <h2>Las tres zonas de lluvia de Huánuco</h2>
+          <p class="sec-lead">Agrupamos los 378 puntos de la región según cómo se reparte la lluvia a lo largo del año. Cada zona tiene su propio color e ícono en el mapa.</p>
         </header>
         <div class="zone-grid" id="zone-grid"></div>
       </div>
     </section>
 
+    <!-- ============================================================ CÓMO FUNCIONA -->
     <section id="como" class="section">
       <div class="wrap">
         <header class="sec-head">
-          <span class="sec-num">03</span>
-          <div>
-            <h2>Cómo hacemos el pronóstico</h2>
-            <p class="sec-lead">Un método sencillo, probado con diez años de datos reales.</p>
-          </div>
+          <p class="eyebrow">04 · Método</p>
+          <h2>Cómo hacemos el pronóstico</h2>
+          <p class="sec-lead">Un método sencillo y transparente, probado contra diez años de lluvia real antes de publicarse.</p>
         </header>
+
+        <ol class="pipeline">
+          <li><span class="pl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l-1 9a4 4 0 0 1-8 0z"/><path d="M12 16v5M8 21h8"/></svg></span>
+            <b>Registros</b><p>Lluvia de cada mes desde <span data-meta="inicio">1981</span>, medida por el SENAMHI y completada con satélite.</p></li>
+          <li><span class="pl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+            <b>Lo normal</b><p>Calculamos cuánto llueve normalmente en cada lugar y en cada mes del año.</p></li>
+          <li><span class="pl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 5-7 4 4"/><path d="M3 21h18"/></svg></span>
+            <b>Aprendizaje</b><p>El modelo aprende cómo la lluvia de los últimos meses anuncia la de los meses que vienen.</p></li>
+          <li><span class="pl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <b>Prueba</b><p>Lo pusimos a prueba con los años <span data-meta="prueba">2016 a 2025</span>, como si no los conociera.</p></li>
+          <li><span class="pl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+            <b>Pronóstico</b><p>Cada mes publicamos la tendencia de los próximos tres meses para cada punto.</p></li>
+        </ol>
+
         <div class="method-grid">
-          <article class="col prose">
-            <h3>En cuatro pasos</h3>
-            <ol class="steps">
-              <li>Usamos los <strong>registros de lluvia del SENAMHI</strong> de cada mes desde <span data-meta="inicio"></span>, en toda la región.</li>
-              <li>Calculamos <strong>cuánto llueve normalmente</strong> en cada lugar y en cada mes del año.</li>
-              <li>Una computadora estudia esos <span data-meta="anios"></span> años y aprende cómo la lluvia de los últimos meses <strong>anuncia</strong> la de los próximos.</li>
-              <li>Te mostramos la <strong>posibilidad</strong> de que llueva menos, igual o más. Cada mes se actualiza con la lluvia más reciente.</li>
-            </ol>
-            <h3>Cómo leerlo</h3>
-            <p>“<strong>6 de cada 10</strong>” quiere decir que, de cada 10 veces que se presentó una situación parecida, en 6 llovió así.
-              Si ninguna opción destaca, decimos <em>sin tendencia clara</em>: lo más prudente es planificar como en un año normal.</p>
-          </article>
-          <article class="col">
+          <article class="card col">
             <h3>¿Qué tan confiable es?</h3>
-            <p>Lo probamos con los años <span data-meta="prueba"></span> como si no los conociera. Así le fue para el mes siguiente, comparado con usar solo la lluvia normal:</p>
+            <p class="muted">Resultado para el mes siguiente, año por año, frente a solo usar la lluvia normal:</p>
             <div id="chart-anios" class="chart"></div>
-            <div class="chart-legend"><span><i style="background:var(--wet)"></i>Acertó mejor que lo normal</span><span><i style="background:var(--dry)"></i>Acertó peor</span></div>
+            <div class="chart-legend"><span><i style="background:var(--good)"></i>Acertó mejor que lo normal</span><span><i style="background:var(--dry)"></i>Acertó peor</span></div>
             <p class="confia" id="confia"></p>
           </article>
-          <article class="col prose">
-            <h3>Ten en cuenta</h3>
+          <article class="card col prose">
+            <h3>Cómo leer el pronóstico</h3>
+            <dl class="read">
+              <div><dt><span class="chip-cat" data-k="0"></span>Menos lluvia</dt><dd>Es probable que el mes sea más seco que un año normal.</dd></div>
+              <div><dt><span class="chip-cat" data-k="1"></span>Normal</dt><dd>Lo probable es una lluvia parecida a la de siempre.</dd></div>
+              <div><dt><span class="chip-cat" data-k="2"></span>Más lluvia</dt><dd>Es probable que el mes sea más lluvioso de lo normal.</dd></div>
+              <div><dt><span class="chip-cat" data-k="3"></span>Sin tendencia</dt><dd>Ninguna opción destaca: planifique como en un año normal.</dd></div>
+            </dl>
+            <p class="muted small">El porcentaje indica qué tan seguro está el modelo. Desde 40 % mostramos la tendencia; desde 50 % la llamamos <em>probable</em> y desde 60 %, <em>muy probable</em>.</p>
+          </article>
+          <article class="card col prose">
+            <h3>Tenga en cuenta</h3>
             <ul class="checks">
-              <li>Es un pronóstico <strong>del mes completo</strong>, no del día: no dice si lloverá mañana.</li>
-              <li>Es más confiable para el <strong>próximo mes</strong> que para dentro de tres meses.</li>
-              <li>Cada cuadro del mapa mide unos 11 × 11 km; en quebradas y valles pequeños el clima puede ser distinto.</li>
-              <li>El aviso de heladas es aproximado: se basa en lo que suele pasar en ese mes y a esa altura.</li>
-              <li>Para decisiones importantes consulta también a SENAMHI y a la Agencia Agraria.</li>
+              <li>Pronostica <strong>el mes completo</strong>, no el día: no dice si lloverá mañana.</li>
+              <li>Acierta más para el <strong>próximo mes</strong> que para dentro de tres.</li>
+              <li>Cada cuadro mide unos 11 × 11 km; en quebradas pequeñas el clima puede variar.</li>
+              <li>El aviso de heladas es aproximado y depende de la altura.</li>
+              <li>Para decisiones importantes consulte también al SENAMHI y a la Agencia Agraria.</li>
             </ul>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PROYECTO -->
+    <section id="proyecto" class="section section-brand">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow">05 · Proyecto</p>
+          <h2>Información del clima al alcance del campo</h2>
+          <p class="sec-lead">Gran parte de las chacras de Huánuco son de secano: dependen de la lluvia. Un mes seco en plena siembra o un exceso en la cosecha puede costar la campaña entera.
+            Tamya convierte décadas de datos de lluvia en un aviso claro, gratuito y pensado para quien trabaja la tierra.</p>
+        </header>
+        <div class="value-grid">
+          <article><span class="v-num">01</span><h3>Local</h3><p>Un pronóstico para cada cuadro de 11 km, no un promedio de toda la región.</p></article>
+          <article><span class="v-num">02</span><h3>Anticipado</h3><p>Tres meses de ventaja para elegir semilla, fecha de siembra y organizar el riego.</p></article>
+          <article><span class="v-num">03</span><h3>Sencillo</h3><p>Sin palabras técnicas, con letra grande, lectura en voz alta y para compartir por WhatsApp.</p></article>
+          <article><span class="v-num">04</span><h3>Abierto</h3><p>Datos públicos, método publicado y resultados de prueba a la vista de todos.</p></article>
+        </div>
+        <div class="roadmap">
+          <h3>Hacia dónde vamos</h3>
+          <ol>
+            <li class="done"><b>Hoy</b><span>Pronóstico mensual de lluvia a tres meses, avisos de sequía, exceso y heladas, y consulta web desde el celular.</span></li>
+            <li><b>Próximo</b><span>Avisos automáticos por WhatsApp o SMS, y comparación con estaciones locales para afinar las heladas.</span></li>
+            <li><b>Después</b><span>Pronósticos estacionales internacionales combinados con el modelo y consejos por cultivo junto a las agencias agrarias.</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PREGUNTAS -->
+    <section id="preguntas" class="section">
+      <div class="wrap narrow">
+        <header class="sec-head">
+          <p class="eyebrow">06 · Preguntas</p>
+          <h2>Preguntas frecuentes</h2>
+        </header>
+        <div class="faq">
+          <details><summary>¿Me dice si va a llover mañana?</summary><p>No. Tamya pronostica la lluvia total de cada mes. Para el tiempo de los próximos días consulte el pronóstico diario del SENAMHI.</p></details>
+          <details><summary>¿Cada cuánto se actualiza?</summary><p>Una vez al mes, cuando el SENAMHI publica la lluvia del mes que terminó. La fecha de actualización aparece arriba de la página.</p></details>
+          <details><summary>¿Por qué a veces dice «sin tendencia»?</summary><p>Porque ninguna opción es claramente más probable que las otras. Es una respuesta honesta: en ese caso conviene planificar como en un año normal.</p></details>
+          <details><summary>¿Qué significa «mm» de lluvia?</summary><p>Un milímetro de lluvia es un litro de agua por cada metro cuadrado de terreno. Un mes con 100 mm dejó 100 litros en cada metro cuadrado.</p></details>
+          <details><summary>¿Necesito internet todo el tiempo?</summary><p>Solo para abrir la página. Pesa poco y funciona en celulares sencillos y con señal débil. Puede compartir el pronóstico de su chacra por WhatsApp.</p></details>
+          <details><summary>¿Quién hizo esta herramienta?</summary><p>Es un proyecto académico del curso de Ingeniería de la Información, basado en el artículo «Predicción climática mediante Machine Learning y datos geoespaciales: un enfoque aplicado a la región Huánuco».</p></details>
+        </div>
 
         <details class="tech" id="tecnico">
-          <summary><span>Información técnica</span><small>Para especialistas e investigadores</small></summary>
+          <summary><span>Información técnica</span><small>Para especialistas, docentes e investigadores</small></summary>
           <div class="tech-in">
             <div class="prose">
               <h3>Método</h3>
@@ -191,10 +303,20 @@
                 Probabilidades por terciles a partir de la distribución empírica de errores fuera de muestra; la categoría se asigna solo si p ≥ 0.40.</p>
               <p>Riesgo de helada: Tmin media mensual ERA5-Land 2015–2026 con corrección por altitud de −6.5 °C/km. Umbrales: moderado ≤ 0 °C y alto ≤ −3 °C, por el sesgo frío de ERA5-Land frente a la estación CP-Huánuco (≈ 6–7 °C).
                 Limitación: PISCOp integra estaciones de SENAMHI, por lo que la validación no es totalmente independiente.</p>
+              <p>Mapa: los valores de cada celda se interpolan de forma bilineal entre centros y se clasifican después, para dibujar bandas continuas; la consulta y la descarga usan siempre el valor exacto de la celda.</p>
+              <h3>Stack</h3>
+              <ul class="stack">
+                <li><b>Extracción</b>Google Earth Engine (JavaScript)</li>
+                <li><b>Procesamiento</b>Python · pandas · xarray</li>
+                <li><b>Modelos</b>scikit-learn (Ridge) · XGBoost</li>
+                <li><b>Entrenamiento</b>Google Colab</li>
+                <li><b>Web</b>HTML · CSS · JavaScript · Leaflet</li>
+                <li><b>Publicación</b>Vercel (sitio estático)</li>
+              </ul>
             </div>
             <div>
               <h3>Habilidad frente a la climatología (SS) y error</h3>
-              <div class="table-wrap"><table class="tbl" id="tabla-metricas"></table></div>
+              <div class="table-scroll"><table class="tbl" id="tabla-metricas"></table></div>
               <h3>Fuentes</h3>
               <ul class="sources" id="fuentes"></ul>
             </div>
@@ -205,14 +327,19 @@
   </main>
 
   <footer class="footer">
+    <div class="awayu" aria-hidden="true"></div>
     <div class="wrap footer-in">
-      <div>
-        <p class="footer-brand">Clima Huánuco</p>
-        <p>Proyecto académico de Ingeniería de la Información. Pronóstico de apoyo a la decisión: para decisiones importantes consulta también a SENAMHI y a la Agencia Agraria de tu provincia.</p>
+      <div class="footer-col">
+        <p class="footer-brand">Tamya</p>
+        <p>«Tamya» es llovizna en quechua. Pronóstico de apoyo a la decisión para el agro de Huánuco. Para decisiones importantes consulte también al SENAMHI y a la Agencia Agraria de su provincia.</p>
       </div>
-      <div class="footer-data">
+      <div class="footer-col">
         <p class="footer-label">Datos</p>
-        <p>Lluvia: SENAMHI (PISCOp)<br>El Niño: NOAA<br>Temperatura: ECMWF (ERA5-Land)<br>Mapa: OpenStreetMap · Esri</p>
+        <p>Lluvia: SENAMHI (PISCOp)<br>El Niño: NOAA<br>Temperatura: ECMWF (ERA5-Land)<br>Mapa: Esri · OpenStreetMap</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-label">Proyecto</p>
+        <p>Curso de Ingeniería de la Información<br>Artículo científico y prototipo</p>
       </div>
       <p class="footer-meta" id="footer-meta"></p>
     </div>
